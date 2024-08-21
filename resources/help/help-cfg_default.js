@@ -11,31 +11,6 @@ export const helpCfg = {
 export const helpList = [{
 	"group": "信息查询",
 	"list": [{
-			"icon": 61,
-			"title": "#角色图鉴",
-			"desc": "目前已知原神角色概况"
-		},
-		{
-			"icon": 66,
-			"title": "#武器图鉴",
-			"desc": "目前已知原神武器概况"
-		},
-		{
-			"icon": 71,
-			"title": "#食谱图鉴",
-			"desc": "目前已知原神食谱概况"
-		},
-		{
-			"icon": 74,
-			"title": "#怪物图鉴",
-			"desc": "目前已知原神怪物概况"
-		},
-		{
-			"icon": 63,
-			"title": "#圣遗物图鉴",
-			"desc": "目前已知原神圣遗物概况"
-		},
-		{
 			"icon": 14,
 			"title": "#体力",
 			"desc": "重写原有的查询当前米游社体力"
