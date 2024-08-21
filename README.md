@@ -18,4 +18,4 @@ git clone https://github.com/HDTianRu/xiaoyao-cvs-plugin.git ./plugins/xiaoyao-c
 
 ## 其他
 - 本仓库随缘更新，出bug可能没能力修
-- [原作者C佬发电](https://afdian.net/a/Ctrlcvs)
+- [给原作者C佬发电](https://afdian.net/a/Ctrlcvs)
