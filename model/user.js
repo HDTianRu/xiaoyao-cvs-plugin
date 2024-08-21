@@ -868,9 +868,10 @@ export default class user {
       msg += '\n【#米币查询】查询米游币余额'
       msg += '\n【#mys原神签到】获取米游币'
       msg += '\n【#更新抽卡记录】更新抽卡记录'
-      msg += '\n【#刷新ck】刷新失效cookie'
+      msg += '\n【#刷新ck】cookie/ck失效时使用'
       msg += '\n【#我的stoken】查看绑定信息'
       msg += '\n【#删除stoken】删除绑定信息'
+      msg += '\n【绝区零支持】详见%help'
       this.e.reply(msg)
     }
   }
