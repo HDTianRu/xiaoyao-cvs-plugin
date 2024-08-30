@@ -12,19 +12,19 @@ export const rule = {
 		describe: "米社规则签到"
 	},
 	bbsSign: {
-		reg: `^#*(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$`,
+		reg: `^#?(米游社|mys|社区)(原神|崩坏3|崩坏2|未定事件簿|大别野|崩坏星穹铁道|绝区零|全部)签到$`,
 		describe: "米游社米游币签到（理论上会签到全部所以区分开了）"
 	},
 	cloudSign:{
-		reg: "^#*云原神签到$",
+		reg: "^#?云原神签到$",
 		describe: "云原神签到"
 	},
 	seach: {
-		reg: `^#*(米游币|米币|云原神)查询$`,
+		reg: `^#?(米游币|米币|云原神)查询$`,
 		describe: "米游币、云原神查询"
 	},
 	cookiesDocHelp: {
-		reg: "^#*(米游社|cookies|米游币|stoken|Stoken|云原神|云)(帮助|教程|绑定)$",
+		reg: "^#?(米游社|cookies|米游币|stoken|Stoken|云原神|云)(帮助|教程|绑定)$",
 		describe: "cookies获取帮助"
 	},
 	signTask:{
