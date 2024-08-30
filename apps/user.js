@@ -43,11 +43,11 @@ export const rule = {
     describe: "云原神签到token获取"
   },
   delSign: {
-    reg: "^#*删除(我的)*((stoken|sk)|(云原神|云ck))$",
+    reg: "^#?(绝区零|星铁)?删除(我的)*((stoken|sk)|(云原神|云ck))$",
     describe: "删除云原神、stoken数据"
   },
   updCookie: {
-    reg: "^#*(刷新|更新|获取)(ck|cookie)$",
+    reg: "^#?(绝区零|星铁)?(刷新|更新|获取)(ck|cookie)$",
     describe: "刷新cookie"
   }
 }

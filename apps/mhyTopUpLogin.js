@@ -12,10 +12,15 @@ const _path = process.cwd();
 export const rule = {
 	qrCodeLogin: {
 		reg: `^#(绝区零|星铁)?(扫码|二维码|辅助)(登录|绑定|登陆)$`,
+		describe: "扫码登录",
+		priority: 9
+	},
+	ExitQrCodeLogin: {
+		reg: `^#(绝区零|星铁)?(取消|退出|停止?)(扫码|二维码)(登录|绑定|登陆)?$`,
 		describe: "扫码登录"
 	},
 	UserPassMsg: {
-		reg: `^#(账号|密码)(密码)?(登录|绑定|登陆)$`,
+		reg: `^#(绝区零|星铁)?(账号|密码)(密码)?(登录|绑定|登陆)$`,
 		describe: "账号密码登录"
 	},
 	UserPassLogin: {
@@ -41,6 +46,10 @@ export async function payOrder(e, { render }) {
 		return await Mys.GetCode({ render })
 	}
 	return false;
+}
+
+export async function ExitQrCodeLogin(e, { render }) {
+  
 }
 
 export async function qrCodeLogin(e, { render }) {
