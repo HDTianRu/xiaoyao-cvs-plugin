@@ -258,8 +258,14 @@ export async function bindStoken (e) {
   e.sk = await utils.getCookieMap(msg)
   let res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
   if (!res?.data) {
-    await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
-    return true;
+    res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
+    if (!res?.data) {
+      await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
+      return true;
+    } else {
+      await user.seachUid(res);
+      return true;
+    }
   }
   // await user.getCookie(e)
   await user.seachUid(res);
