@@ -316,6 +316,7 @@ export async function delSign (e) {
 }
 export async function updCookie (e) {
   let stoken = await gsCfg.getUserStoken(e.user_id);
+  let refresh = false
   if (Object.keys(stoken).length == 0) {
     e.reply("请先绑定stoken\n发送【stoken帮助】查看配置教程")
     return true;
@@ -349,6 +350,10 @@ export async function updCookie (e) {
     let res = await user.getData("bbsGetCookie", data, false)
     if (!res?.data) {
       e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
+      if (/.*登录状态失效，请重新登录.*/.test(res.message)) {
+        delete stoken[item]
+        refresh = true
+      }
       continue;
     }
     ltuids.push(Number(stoken[item].stuid))
@@ -371,6 +376,7 @@ export async function updCookie (e) {
     }
   }
   await utils.replyMake(e, sendMsg, 0)
+  if (refresh) gsCfg.saveBingStoken(e.user_id, stoken)
   return true;
 }
 
