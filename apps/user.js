@@ -342,7 +342,6 @@ export async function updCookie (e) {
     }
     if (ltuids.includes(Number(stoken[item].stuid))) continue
 
-    ltuids.push(Number(stoken[item].stuid))
     let cookies = `uid=${stoken[item].stuid}&stoken=${stoken[item].stoken}`
     if (stoken[item]?.mid) cookies += `&mid=${stoken[item]?.mid}`
     let data = { cookies: cookies }
@@ -352,6 +351,7 @@ export async function updCookie (e) {
       e.reply(`uid:${stoken[item].uid},请求异常：${res.message}`)
       continue;
     }
+    ltuids.push(Number(stoken[item].stuid))
     let ck = res["data"]["cookie_token"];
     e.msg = `ltoken=${stoken[item].ltoken};ltuid=${stoken[item].stuid};cookie_token=${ck}; account_id=${stoken[item].stuid};`
     if (isGet) {
