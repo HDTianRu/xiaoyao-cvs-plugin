@@ -376,7 +376,11 @@ export async function updCookie (e) {
     }
   }
   await utils.replyMake(e, sendMsg, 0)
-  if (refresh) gsCfg.saveBingStoken(e.user_id, stoken)
+  if (refresh) {
+    // 覆盖更新，先清空一次
+    gsCfg.saveBingStoken(e.user_id)
+    gsCfg.saveBingStoken(e.user_id, stoken)
+  }
   return true;
 }
 
