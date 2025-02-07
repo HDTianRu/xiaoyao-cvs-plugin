@@ -849,6 +849,7 @@ export default class user {
       for (let s of list) {
         let datalist = {}
         let uid = s.game_uid
+        if (/.*(Object|undefined).*/.test(s.game_uid)) continue
         datalist[uid] = {
           stuid: this.e?.sk?.get('stuid') || this.e.stuid,
           stoken: v2Sk?.data?.token?.token || this.e?.sk?.get('stoken') || data?.data?.list[0].token,

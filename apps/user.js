@@ -245,7 +245,7 @@ export async function bindLogin_ticket (e) {
   return false;
 }
 
-export async function bindStoken (e, uid = '') {
+export async function bindStoken (e) {
   if (!e.isPrivate) {
     e.reply("请私聊发送")
     return true;
@@ -253,22 +253,13 @@ export async function bindStoken (e, uid = '') {
   let msg = e.msg;
   let user = new User(e);
   await user.cookie(e)
-  e.uid = uid || e.uid
-  e.region = getServer(e.uid)
+  e.region = getServer(e.uid, e.game)
   e.cks = msg.replace(/;/g, '&').replace(/stuid/, "uid")
   e.sk = await utils.getCookieMap(msg)
   let res = await user.getData("bbsGetCookie", { cookies: e.cks }, false)
   if (!res?.data) {
-    e.uid = "64"
-    e.region = getServer(e.uid)
-    res = await user.getData("bbsGetCookie", { cookies: e.cks, method: 'post' }, false)
-    if (!res?.data) {
-      await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
-      return true;
-    } else {
-      await user.seachUid(res);
-      return true;
-    }
+    await e.reply(`绑定Stoken失败，异常：${res?.message}\n请发送【stoken帮助】查看配置教程重新配置~`);
+    return true;
   }
   // await user.getCookie(e)
   await user.seachUid(res);
@@ -337,9 +328,9 @@ export async function updCookie (e) {
 
   const ltuids = []
   for (let item of Object.keys(stoken)) {
-    e.region = getServer(stoken[item].uid)
+    e.region = stoken[item].region
     e.uid = stoken[item].uid
-    if (!e?.uid) {
+    if (!e?.uid || /.*(Object|undefined).*/.test(e.uid)) {
       Bot.logger.mark(`[刷新ck][stoken读取]qq:${e?.user_id}；uid:${e?.uid}`)
       continue; //奇怪的东西
     }
@@ -376,46 +367,43 @@ export async function updCookie (e) {
   await utils.replyMake(e, sendMsg, 0)
   return true;
 }
-const game_region = [
-  'prod_gf_cn',
-  'prod_gf_cn',
-  'prod_gf_us',
-  'prod_gf_eu',
-  'prod_gf_jp',
-  'prod_gf_sg',
-];
+
 function getServer (uid, game = '') {
+  const game_region = {
+    gs: ['cn_gf01', 'cn_qd01', 'os_usa', 'os_euro', 'os_asia', 'os_cht'],
+    sr: ['prod_gf_cn', 'prod_qd_cn', 'prod_official_usa', 'prod_official_euro', 'prod_official_asia', 'prod_official_cht'],
+    zzz: ['prod_gf_cn', 'prod_gf_cn', 'prod_gf_us', 'prod_gf_eu', 'prod_gf_jp', 'prod_gf_sg']
+  }
+  const _uid = String(uid)
   if (game == 'zzz') {
-    const _uid = this.uid?.toString();
     if (_uid.length < 10) {
-      return game_region[0]; // 官服
+      return game_region[game][0] // 官服
     }
+
     switch (_uid.slice(0, -8)) {
       case '10':
-        return game_region[2]; // 美服
+        return game_region[game][2]// 美服
       case '15':
-        return game_region[3]; // 欧服
+        return game_region[game][3]// 欧服
       case '13':
-        return game_region[4]; // 亚服
+        return game_region[game][4]// 亚服
       case '17':
-        return game_region[5]; // 港澳台服
+        return game_region[game][5]// 港澳台服
     }
-    return game_region[0];
+  } else {
+    switch (_uid.slice(0, -8)) {
+      case '5':
+        return game_region[game][1] // B服
+      case '6':
+        return game_region[game][2]// 美服
+      case '7':
+        return game_region[game][3]// 欧服
+      case '8':
+      case '18':
+        return game_region[game][4]// 亚服
+      case '9':
+        return game_region[game][5]// 港澳台服
+    }
   }
-  switch (String(uid)[0]) {
-    case '1':
-    case '2':
-      return 'cn_gf01' // 官服
-    case '5':
-      return 'cn_qd01' // B服
-    case '6':
-      return 'os_usa' // 美服
-    case '7':
-      return 'os_euro' // 欧服
-    case '8':
-      return 'os_asia' // 亚服
-    case '9':
-      return 'os_cht' // 港澳台服
-  }
-  return 'cn_gf01'
+  return game_region[game][0] // 官服
 }
